@@ -97,6 +97,40 @@
             40% { transform: translateY(-10px); }
             60% { transform: translateY(-5px); }
         }
+
+         .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
     </style>
 </head>
 <body class="bg-gray-100">
@@ -385,12 +419,52 @@ By integrating agile forecasting, financial strategy, and execution excellence, 
 
         // Email link update
         const messageInput = document.getElementById('message');
-        const sendEmailLink = document.getElementById('send-email');
+      /**  const sendEmailLink = document.getElementById('send-email');
         messageInput.addEventListener('input', () => {
             const message = encodeURIComponent(messageInput.value);
             sendEmailLink.href = `mailto:sangitagiri01@yahoo.com?subject=Message%20from%20Portfolio&body=${message}`;
         });
+        */
+    <div class="container">
+        <h1>Contact Me</h1>
+        <p>Send me a message!</p>
+        <form id="contact-form">
+            <textarea id="message" name="message" placeholder="Enter your message here" required></textarea>
+            <button type="submit" id="send-email">Send Email</button>
+        </form>
+        <div id="status"></div>
+    </div>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your User ID
+        (function(){
+            emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS User ID
+        })();
 
+        // Handle form submission
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the message content
+            const message = document.getElementById('message').value;
+            const status = document.getElementById('status');
+
+            // Send email using EmailJS
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+                message: message
+            })
+            .then(function(response) {
+                status.textContent = 'Email sent successfully!';
+                status.style.color = 'green';
+                document.getElementById('contact-form').reset(); // Clear the form
+            }, function(error) {
+                status.textContent = 'Failed to send email. Please try again.';
+                status.style.color = 'red';
+                console.error('EmailJS error:', error);
+            });
+        });
+    </script>
 
         
     </script>
